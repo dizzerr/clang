@@ -924,9 +924,10 @@ void UnwrappedLineFormatter::formatFirstToken(FormatToken &RootToken,
       (!PreviousLine->InPPDirective || !RootToken.HasUnescapedNewline))
     Newlines = std::min(1u, Newlines);
 
-  Whitespaces->replaceWhitespace(RootToken, Newlines, IndentLevel, Indent,
-                                 Indent, InPPDirective &&
-                                             !RootToken.HasUnescapedNewline);
+  if (!InPPDirective)
+    Whitespaces->replaceWhitespace(RootToken, Newlines, IndentLevel, Indent,
+                                   Indent, InPPDirective &&
+                                   !RootToken.HasUnescapedNewline);
 }
 
 unsigned
